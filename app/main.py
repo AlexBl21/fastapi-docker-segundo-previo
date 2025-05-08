@@ -2,9 +2,22 @@ from fastapi import FastAPI, Request
 import json
 import os
 
+import sqlite3
+DB_PATH = "data/db.sqlite3"
+os.makedirs("data", exist_ok=True)
+conn = sqlite3.connect(DB_PATH)
+cursor = conn.cursor()
+cursor.execute("""
+    CREATE TABLE IF NOT EXISTS notes (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        content TEXT NOT NULL
+    )
+""")
+conn.commit()
+conn.close()
+
 app = FastAPI()
-
-
 @app.get("/")
 async def root():
     return {
