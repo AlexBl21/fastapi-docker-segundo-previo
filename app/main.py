@@ -32,7 +32,18 @@ async def root():
 
 @app.get("/notes")
 async def get_notes():
-    return {"notes": []}
+    try:
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, title, content FROM notes")
+        rows = cursor.fetchall()
+        conn.close()
+
+        notes = [{"id": row[0], "title": row[1], "content": row[2]} for row in rows]
+        return {"notes": notes}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @app.post("/notes")
 async def create_note(note: Note):
     if not note.title.strip() or not note.content.strip():
