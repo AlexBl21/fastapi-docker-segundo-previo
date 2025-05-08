@@ -4,20 +4,20 @@ import sqlite3
 import os
 
 app = FastAPI()
-DB_PATH = "data/db.sqlite3"
+# DB_PATH = "data/db.sqlite3"
 
-os.makedirs("data", exist_ok=True)
-conn = sqlite3.connect(DB_PATH)
-cursor = conn.cursor()
-cursor.execute("""
-    CREATE TABLE IF NOT EXISTS notes (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        content TEXT NOT NULL
-    )
-""")
-conn.commit()
-conn.close()
+# os.makedirs("data", exist_ok=True)
+# conn = sqlite3.connect(DB_PATH)
+# cursor = conn.cursor()
+# cursor.execute("""
+#     CREATE TABLE IF NOT EXISTS notes (
+#         id INTEGER PRIMARY KEY AUTOINCREMENT,
+#         title TEXT NOT NULL,
+#         content TEXT NOT NULL
+#     )
+# """)
+# conn.commit()
+# conn.close() comando para crear la tabla (No se si está bien profe :c)
 
 class Note(BaseModel):
     title: str
